@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mail">
+ <!-- 인증코드 저장 -->
+ <update id="setCode" parameterType="hashmap">
+  UPDATE user_info SET auth_code=#{auth_code} WHERE email=#{email}
+ </update>
+ 
+ <!-- 이메일 파라미터로 인증코드 가져가기 -->
+ <select id="authComplete" parameterType="string" resultType="string">
+  SELECT auth_code FROM user_info WHERE email=#{email}
+ </select>
+ 
+ <!-- auth_flag 바꾸기 -->
+ <update id="flagChange" parameterType="string">
+  UPDATE user_info SET auth_flag="true" WHERE email=#{email}
+ </update>
+ 
+ <!-- 새 비번 업뎃 -->
+ <update id="changePassword" parameterType="hashmap">
+  UPDATE user_info SET pw=#{newPw} WHERE email=#{email}
+ </update>
+</mapper>
